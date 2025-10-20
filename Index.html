@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>GOST — сервис Яндекс Такси</title>
+
+  <!-- Шрифты -->
+  <link rel="preload" href="fonts/montserrat/Montserrat-Regular.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="fonts/montserrat/stylesheet.css" />
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- Sticky-меню при прокрутке -->
+  <div class="sticky-header" aria-hidden="true">
+    <nav class="sticky-nav-desktop">
+      <a class="sticky-link" href="#benefits">Наши преимущества</a>
+      <a class="sticky-link" href="#faq">Условия работы</a>
+      <a class="sticky-link" href="#promos2">Акции</a>
+      <a class="sticky-link" href="#contacts">Наша команда</a>
+      <a class="sticky-link" href="#contacts">Отзывы</a>
+      <a class="sticky-link" href="#contacts">Контакты</a>
+    </nav>
+    <button class="sticky-top-btn" aria-label="Наверх">
+      <svg width="25" height="25" viewBox="0 0 25 25">
+        <path d="M12.5 5L20 20H5L12.5 5Z" fill="black" />
+      </svg>
+    </button>
+    <div class="sticky-mobile">
+      <button class="sticky-burger" aria-label="Меню">
+        <img src="Images/burger.svg" alt="" />
+      </button>
+      <a class="sticky-cta-mobile" href="#contacts">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</a>
+    </div>
+  </div>
+
+  <header class="hero" role="banner">
+    <!-- Полосы под логотипом -->
+    <div class="hero__bars" aria-hidden="false">
+      <!-- Левая половина (жёлтая) с пунктом меню -->
+      <div class="hero__bar hero__bar--left">
+        <nav class="bar-menu bar-menu--left" aria-label="Левая навигация">
+          <a class="nav-link nav-link--left" href="#benefits">Преимущества</a>
+          <a class="nav-link nav-link--left" href="#faq">Условия работы</a>
+          <a class="nav-link nav-link--left" href="#promos2">Акции</a>
+        </nav>
+      </div>
+
+      <!-- Правая половина (чёрная) с двумя пунктами меню -->
+      <div class="hero__bar hero__bar--right">
+        <nav class="bar-menu bar-menu--right" aria-label="Правая навигация">
+          <a class="nav-link nav-link--right" href="#contacts">Наша команда</a>
+          <a class="nav-link nav-link--right" href="#contacts">Отзывы</a>
+          <a class="nav-link nav-link--right" href="#contacts">Контакты</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Логотип поверх полос -->
+    <div class="hero__logo-wrap">
+      <img class="hero__logo" src="Images/Gost-Logo.svg" alt="GOST — сервис Яндекс Такси" loading="eager"
+        decoding="async" />
+    </div>
+
+    <img class="hero-info-decor" src="Images/gost_img21.jpg" alt="" aria-hidden="true" />
+
+    <!-- Инфо-блок под логотипом -->
+    <div class="hero-info">
+      <div class="hero-info__media">
+        <img src="Images/gost_img1.png" alt="" />
+      </div>
+      <div class="hero-info__text">
+        <h1 class="hero-info__title">ТВОЙ ЛЕГКИЙ СТАРТ В ТАКСИ С НАМИ</h1>
+        <p class="hero-info__subtitle">
+          <strong>ПРИЁМ ВОДИТЕЛЕЙ В ЯНДЕКС ТАКСИ.</strong><br>
+          СЕРТИФИЦИРОВАННЫЙ В ЯНДЕКС ПАРК ГОСТ
+        </p>
+        <a class="cta" href="#contacts" aria-label="Связаться с менеджером">
+          <span class="cta__inner">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</span>
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Бургер для ширины < 1200px -->
+    <button class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+      <img src="Images/burger.svg" alt="" />
+    </button>
+
+    <!-- Мини-блоки: адрес и телефон -->
+    <div class="hero-mini">
+      <a class="mini mini--address" href="#contacts">
+        <img class="icon" src="Images/geo2.svg" alt="" />
+        <span>г. Орск, проспект Мира, 15Г</span>
+      </a>
+
+      <a class="mini mini--phone" href="tel:83537302230">
+        <img class="icon" src="Images/phone.svg" alt="" />
+        <span>8&nbsp;3537&nbsp;30-22-30</span>
+      </a>
+    </div>
+
+    <!-- Мобильное меню -->
+    <nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
+      <a class="mobile-link" href="#benefits">Наши преимущества</a>
+      <a class="mobile-link" href="#promos2">Акции / Бонусы</a>
+      <a class="mobile-link" href="#faq">FAQ / Условия работы</a>
+      <a class="mobile-link" href="#contacts">Контакты</a>
+    </nav>
+
+    <!-- Заполнитель для высоты хедера -->
+    <!--<div class="hero-spacer" aria-hidden="true"></div>-->
+    <!-- Оверлей для мобильного меню -->
+    <div class="mobile-menu-overlay" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <!-- Секции для прокрутки -->
+    <section id="benefits" class="section-benefits">
+
+      <!-- Блок преимуществ (аналог hero-info) -->
+      <div class="benefits-content">
+        <!-- Пустая колонка вместо картинки -->
+        <div class="benefits-media-placeholder"></div>
+
+        <!-- Текстовая колонка -->
+        <div class="benefits-text">
+          <h2 class="benefits-title">НАШИ ПРЕИМУЩЕСТВА</h2>
+          <p class="benefits-lead">
+            Сертифицированный в Яндекс парк ГОСТ набирает водителей категории B со стажем более 3х лет, готовых
+            зарабатывать!
+          </p>
+          <p class="benefits-commission">
+            <strong>Комиссия за заказ 3%, мгновенные переводы на карту 1%.</strong>
+          </p>
+
+          <!-- Список преимуществ -->
+          <ul class="benefits-list">
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Аренда авто компании от 1000 рублей</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Доход до 80 000 рублей (всегда большое количество заказов)</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Абсолютно свободный график работы</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Всегда честное распределение заказов</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Полная информация о заказе (откуда, куда, стоимость поездки)</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Гарантия безопасности</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Бесплатная связь с клиентом</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Высокий средний чек по заказу</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Проведение различных акций</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Гарантированные доплаты водителям</span>
+            </li>
+            <li class="benefit-item">
+              <img src="Images/gost-ico.svg" alt="" class="benefit-icon" />
+              <span>Для работы подходит любой телефон</span>
+            </li>
+          </ul>
+
+          <p class="benefits-call">
+            <strong>Увеличение заказов уже началось! Звони 30-22-30!</strong>
+          </p>
+
+          <!-- Кнопка CTA (как в первом блоке) -->
+          <a class="cta " href="#contacts" aria-label="Связаться с менеджером">
+            <span class="cta__inner hidemobile">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Декоративная фоновая картинка с параллаксом -->
+
+      <img class="benefits-decor" src="Images/gost_img31.jpg" alt="" aria-hidden="true" />
+
+    </section>
+
+    <!-- Линия между блоками -->
+
+    <!-- <div class="content-divider"></div> -->
+    <!-- <section id="promos" class="section-promos"> -->
+    <!-- Серая полоса — ВСЕГДА ПЕРВОЙ -->
+    <!-- <div class="promos-bg-strip"></div> -->
+
+    <!-- Картинка поверх полосы -->
+    <!-- <img class="promos-decor" src="Images/gost_img5-1.jpg" alt="" aria-hidden="true" /> -->
+
+    <!-- Контент -->
+    <!-- <div class="promos-content">
+        <div class="promos-media-placeholder"></div>
+        <div class="promos-text">
+          <h2 class="promos-title">ДЕНЬГИ ЗА ДРУЗЕЙ</h2>
+          <p class="promos-subtitle">ПРИВОДИ ДРУЗЕЙ И <strong>ПОЛУЧАЙ ОТ 1000 РУБЛЕЙ ЗА КАЖДОГО!</strong></p>
+          <a class="cta" href="#contacts" aria-label="Связаться с менеджером">
+            <span class="cta__inner">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</span>
+          </a>
+        </div>
+    </section> -->
+
+
+
+
+    <!-- Разделитель (если нужно) -->
+    <div class="content-divider"></div>
+
+
+    <!--Секция с условиями для работы-->
+    <section id="faq" class="section-faq">
+      <div class="faq-content">
+        <!-- Пустая колонка вместо картинки -->
+        <div class="faq-media-placeholder"></div>
+
+        <!-- Текстовая колонка -->
+        <div class="faq-text">
+          <h2 class="faq-title">УСЛОВИЯ РАБОТЫ</h2>
+
+          <!-- Список условий -->
+          <ul class="faq-list">
+            <li class="faq-item">
+              <img src="Images/gost-ico.svg" alt="" class="faq-icon" />
+              <span>Водитель должен иметь стаж от 3 лет</span>
+            </li>
+            <li class="faq-item">
+              <img src="Images/gost-ico.svg" alt="" class="faq-icon" />
+              <span>Автомобиль не старше 15 лет</span>
+            </li>
+            <li class="faq-item">
+              <img src="Images/gost-ico.svg" alt="" class="faq-icon" />
+              <span>Наличие ОСАГО и КАСКО</span>
+            </li>
+            <li class="faq-item">
+              <img src="Images/gost-ico.svg" alt="" class="faq-icon" />
+              <span>Прохождение техосмотра</span>
+            </li>
+            <!-- Добавь остальные пункты по аналогии -->
+          </ul>
+
+          <!-- Кнопка CTA -->
+          <a class="cta" href="#contacts" aria-label="Связаться с менеджером">
+            <span class="cta__inner">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Декоративная фоновая картинка с параллаксом (как в преимуществах) -->
+      <img class="faq-decor" src="Images/gost_img7.jpg" alt="" aria-hidden="true" />
+    </section>
+    <!-- Линия между блоками -->
+    <div class="content-divider"></div>
+    <div class="promos-bg-strip"></div>
+
+    <!--Раздел Акции-->
+    <section id="promos2" class="section-promos-alt">
+      <!-- Серая полоса на всю ширину окна -->
+      <div class="promos-alt-bg-strip"></div>
+
+      <!-- Фоновая картинка -->
+      <img class="promos-alt-decor" src="Images/gost_img5-2.jpg" alt="" aria-hidden="true" />
+
+      <!-- Контент -->
+      <div class="promos-alt-content">
+        <div class="promos-alt-media-placeholder"></div>
+        <div class="promos-alt-text">
+          <h2 class="promos-alt-title">Акции</h2>
+          <p class="promos-alt-subtitle"><strong>ВЕРНЕМ ДО 5000 РУБЛЕЙ ЗА ПЕРВУЮ СМЕНУ</strong></p>
+          <p class="promos-alt-subtitle"><strong>ПРИВОДИ ДРУЗЕЙ И ПОЛУЧАЙ ОТ 1000 РУБЛЕЙ ЗА КАЖДОГО!</strong></p>
+          <a class="cta" href="#contacts" aria-label="Связаться с менеджером">
+            <span class="cta__inner">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- Линия между блоками -->
+
+    <section id="contacts" class="section-contacts">
+      <!-- Чёрный фон на всю ширину окна -->
+      <div class="contacts-full-bg"></div>
+
+      <!-- Контент (центрирован по ширине, как в других секциях) -->
+      <div class="contacts-content">
+        <!-- Левая колонка: контакты -->
+        <div class="contacts-info">
+          <h2 class="contacts-title">КОНТАКТЫ</h2>
+
+          <div class="contacts-phones">
+            <p class="contacts-label">Телефоны:</p>
+            <a href="tel:83537302230" class="contact-phone">
+              <img src="Images/phone.svg" alt="" class="contact-icon" />
+              <span>8 3537 30-22-30</span>
+            </a>
+            <a href="tel:83537322222" class="contact-phone">
+              <img src="Images/phone.svg" alt="" class="contact-icon" />
+              <span>8 3537 32-22-22</span>
+            </a>
+          </div>
+
+          <div class="contacts-socials">
+            <a href="https://t.me/..." target="_blank" rel="noopener" aria-label="Telegram">
+              <img src="Images/sico1.svg" alt="Telegram" class="social-icon" />
+            </a>
+            <a href="https://vk.com/..." target="_blank" rel="noopener" aria-label="ВКонтакте">
+              <img src="Images/sico2.svg" alt="ВКонтакте" class="social-icon" />
+            </a>
+            <a href="https://instagram.com/..." target="_blank" rel="noopener" aria-label="Instagram">
+              <img src="Images/sico3.svg" alt="Instagram" class="social-icon" />
+            </a>
+            <a href="https://wa.me/..." target="_blank" rel="noopener" aria-label="WhatsApp">
+              <img src="Images/sico4.svg" alt="WhatsApp" class="social-icon" />
+            </a>
+          </div>
+
+          <div class="contacts-address">
+            <p class="contacts-label">Адрес офиса:</p>
+            <p class="contact-text">Орск, проспект Мира, 15Г</p>
+            <p class="contact-text">ежедневно, с 9:00 до 21:00</p>
+          </div>
+        </div>
+
+        <!-- Правая колонка: карта -->
+        <div class="contacts-map">
+          <iframe
+            src="https://yandex.ru/map-widget/v1/?um=constructor%3A6637278b454caab7dcf2de68751bf42a2ce13bac1c313300aa91f926faebbb3b&amp;source=constructor"
+            width="800" height="600" frameborder="0"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="site-footer__inner">
+        <p>ГОСТ © 2025</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+
+    // Плавная прокрутка с учётом sticky-меню
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+
+      const id = href.slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      e.preventDefault();
+
+      // Высота sticky-меню (адаптивно)
+      const stickyHeight = window.innerWidth <= 768
+        ? parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar-h'))
+        : 66; // fallback
+
+      const y = el.getBoundingClientRect().top + window.scrollY - stickyHeight - 12;
+
+      window.scrollTo({ top: y, behavior: 'smooth' });
+
+      // Закрыть мобильное меню
+      const menu = document.getElementById('mobileMenu');
+      const burger = document.querySelector('.burger');
+      if (menu && menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        if (burger) {
+          burger.classList.remove('open');
+          burger.setAttribute('aria-expanded', 'false');
+        }
+        document.querySelector('.mobile-menu-overlay')?.classList.remove('active');
+      }
+    });
+
+    // Тоггл мобильного меню и оверлея
+    const burger = document.querySelector('.burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.querySelector('.mobile-menu-overlay');
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      overlay.classList.remove('active');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function openMobileMenu() {
+      mobileMenu.classList.add('open');
+      overlay.classList.add('active');
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
+
+    // Открытие/закрытие по бургеру
+    burger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (mobileMenu.classList.contains('open')) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+
+    // Закрытие по клику на оверлей
+    overlay.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeMobileMenu();
+    });
+
+    // Закрытие по клику на ссылку (уже есть в основном обработчике, но дублируем для надёжности)
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    });
+
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+        closeMobileMenu();
+      }
+    });
+
+    /* Эффект наведения для .nav-link через класс .is-hovered */
+    (function () {
+      const links = document.querySelectorAll('.nav-link');
+
+      links.forEach(link => {
+        link.addEventListener('mouseenter', () => link.classList.add('is-hovered'));
+        link.addEventListener('mouseleave', () => link.classList.remove('is-hovered'));
+
+        // Поддержка клавиатуры
+        link.addEventListener('focus', () => link.classList.add('is-hovered'));
+        link.addEventListener('blur', () => link.classList.remove('is-hovered'));
+
+        // Мягкая поддержка тача (не мешает кликам)
+        link.addEventListener('touchstart', () => link.classList.add('is-hovered'), { passive: true });
+        link.addEventListener('touchend', () => link.classList.remove('is-hovered'));
+        link.addEventListener('touchcancel', () => link.classList.remove('is-hovered'));
+      });
+    })();
+
+    // Поворот gost_img31.jpg (фон преимуществ) — амплитуда 10px
+    (function () {
+      const decor = document.querySelector('.benefits-decor');
+      if (!decor) return;
+
+      const maxShift = 10; // ← 10 пикселей вместо 20
+      let currentShift = 0;
+      let targetShift = 0;
+
+      const enable = () => window.matchMedia('(hover:hover) and (pointer:fine)').matches && window.innerWidth > 768;
+      let active = enable();
+
+      let raf = null;
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function onMove(e) {
+        if (!active) return;
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+        const x = Math.min(Math.max(e.clientX, 0), vw) / vw;
+        // Сдвиг: от -10 до +10
+        targetShift = -maxShift + (2 * maxShift) * x; // или: targetShift = maxShift * (2*x - 1);
+        if (raf == null) tick();
+      }
+
+      function tick() {
+        raf = requestAnimationFrame(tick);
+        currentShift = lerp(currentShift, targetShift, 0.15);
+        decor.style.setProperty('--decor-shift-benefits', `${currentShift.toFixed(2)}px`);
+      }
+
+      function onLeave() {
+        if (!active) return;
+        targetShift = 0;
+        if (raf == null) tick();
+      }
+
+      function reevaluate() {
+        const was = active;
+        active = enable();
+        if (!active && was) {
+          cancelAnimationFrame(raf);
+          raf = null;
+          decor.style.setProperty('--decor-shift-benefits', '0px');
+        }
+      }
+
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseleave', onLeave);
+      window.addEventListener('resize', reevaluate);
+      window.matchMedia('(hover:hover) and (pointer:fine)').addEventListener?.('change', reevaluate);
+    })();
+
+    // Поворот gost_img1.png вокруг центра по оси Z от позиции мыши (только десктоп)
+    (function () {
+      const img = document.querySelector('.hero-info__media img');
+      if (!img) return;
+
+      const decor = document.querySelector('.hero-info-decor');
+      const maxShift = 20; // px
+      let currentShift = 0;
+      let targetShift = 0;
+
+      // Включаем эффект только при "тонком" указателе и ширине > 768
+      const enable = () => window.matchMedia('(hover:hover) and (pointer:fine)').matches && window.innerWidth > 768;
+      let active = enable();
+
+      let raf = null;
+      let targetDeg = 0;      // куда хотим повернуть
+      let currentDeg = 0;     // текущий визуальный поворот
+      const minDeg = -45;     // крайние углы
+      const maxDeg = 45;
+
+      function lerp(a, b, t) { return a + (b - a) * t; } // сглаживание
+
+      function onMove(e) {
+        if (!active) return;
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+
+        // Нормируем X → [0..1]
+        const x = Math.min(Math.max(e.clientX, 0), vw) / vw;
+
+        // Угол [-45..45]
+        targetDeg = minDeg + (maxDeg - minDeg) * x;
+
+        // Сдвиг декора: +градусы => смещение влево до -20px, -градусы => вправо до +20px
+        // т.е. shift = -maxShift * (deg / maxDeg)
+        targetShift = -maxShift * (targetDeg / maxDeg);
+
+        if (raf == null) tick();
+      }
+
+      function tick() {
+        raf = requestAnimationFrame(tick);
+        // Плавная инерция
+        currentDeg = lerp(currentDeg, targetDeg, 0.15);
+        currentShift = lerp(currentShift, targetShift, 0.15);
+
+        img.style.transform = `rotate(${currentDeg.toFixed(2)}deg)`;
+
+        if (decor) {
+          decor.style.setProperty('--decor-shift', `${currentShift.toFixed(2)}px`);
+        }
+      }
+
+      function onEnter() {
+        if (!active) return;
+        // облегчённый старт — ничего не делаем, rAF запустится при первом move
+      }
+
+      function onLeave() {
+        if (!active) return;
+        // Возвращаемся к 0 и для угла, и для сдвига
+        targetDeg = 0;
+        targetShift = 0;
+        if (raf == null) tick();
+      }
+
+      // Переключаем эффект при ресайзе/изменении медиа
+      function reevaluate() {
+        const was = active;
+        active = enable();
+        if (!active && was) {
+          // выключаем: чистим анимацию и стили
+          cancelAnimationFrame(raf);
+          raf = null;
+          targetDeg = 0;
+          currentDeg = 0;
+          img.style.transform = '';
+        }
+      }
+
+      // Слушатели
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseenter', onEnter);
+      window.addEventListener('mouseleave', onLeave);
+      window.addEventListener('resize', reevaluate);
+      window.matchMedia('(hover:hover) and (pointer:fine)').addEventListener?.('change', reevaluate);
+
+      // На мобильных/тач — эффекта нет, всё отключено через active=false
+    })();
+
+    // Sticky Header — финальная версия
+    (function () {
+      const stickyHeader = document.querySelector('.sticky-header');
+      if (!stickyHeader) return;
+
+      function checkSticky() {
+        // Адаптивный порог: 320px на мобиле, 500px на десктопе
+        const threshold = window.innerWidth <= 768 ? 160 : 200;
+        const shouldShow = window.scrollY >= threshold;
+
+        if (shouldShow) {
+          stickyHeader.classList.add('active');
+          stickyHeader.setAttribute('aria-hidden', 'false');
+        } else {
+          stickyHeader.classList.remove('active');
+          stickyHeader.setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      // Прокрутка наверх
+      const topBtn = document.querySelector('.sticky-top-btn');
+      if (topBtn) {
+        topBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Бургер в sticky-меню
+      const stickyBurger = document.querySelector('.sticky-burger');
+      if (stickyBurger) {
+        stickyBurger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const mainBurger = document.querySelector('.burger');
+          if (mainBurger) {
+            mainBurger.click();
+          }
+        });
+      }
+
+      window.addEventListener('scroll', checkSticky);
+      window.addEventListener('resize', checkSticky);
+      checkSticky();
+    })();
+
+    // Обратный параллакс для картинки акций
+    (function () {
+      const decor = document.querySelector('.promos-decor');
+      if (!decor) return;
+
+      const maxShift = 10;
+      let currentShift = 0;
+      let targetShift = 0;
+
+      const enable = () => window.matchMedia('(hover:hover) and (pointer:fine)').matches && window.innerWidth > 768;
+      let active = enable();
+      let raf = null;
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function onMove(e) {
+        if (!active) return;
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+        const x = Math.min(Math.max(e.clientX, 0), vw) / vw;
+        // ОБРАТНЫЙ сдвиг: +10 → -10
+        targetShift = maxShift - (2 * maxShift) * x;
+        if (raf == null) tick();
+      }
+
+      function tick() {
+        raf = requestAnimationFrame(tick);
+        currentShift = lerp(currentShift, targetShift, 0.15);
+        decor.style.setProperty('--decor-shift-promos', `${currentShift.toFixed(2)}px`);
+      }
+
+      function onLeave() {
+        if (!active) return;
+        targetShift = 0;
+        if (raf == null) tick();
+      }
+
+      function reevaluate() {
+        const was = active;
+        active = enable();
+        if (!active && was) {
+          cancelAnimationFrame(raf);
+          raf = null;
+          decor.style.setProperty('--decor-shift-promos', '0px');
+        }
+      }
+
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseleave', onLeave);
+      window.addEventListener('resize', reevaluate);
+      window.matchMedia('(hover:hover) and (pointer:fine)').addEventListener?.('change', reevaluate);
+    })();
+
+    // Параллакс для второй картинки акций
+    (function () {
+      const decor = document.querySelector('.promos-alt-decor');
+      if (!decor) return;
+
+      const maxShift = 10;
+      let currentShift = 0;
+      let targetShift = 0;
+
+      const enable = () => window.matchMedia('(hover:hover) and (pointer:fine)').matches && window.innerWidth > 768;
+      let active = enable();
+      let raf = null;
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function onMove(e) {
+        if (!active) return;
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+        const x = Math.min(Math.max(e.clientX, 0), vw) / vw;
+        // Сдвиг
+        targetShift = maxShift + (2 * maxShift) * x;
+        if (raf == null) tick();
+      }
+
+      function tick() {
+        raf = requestAnimationFrame(tick);
+        currentShift = lerp(currentShift, targetShift, 0.15);
+        decor.style.setProperty('--decor-shift-alt', `${currentShift.toFixed(2)}px`);
+      }
+
+      function onLeave() {
+        if (!active) return;
+        targetShift = 0;
+        if (raf == null) tick();
+      }
+
+      function reevaluate() {
+        const was = active;
+        active = enable();
+        if (!active && was) {
+          cancelAnimationFrame(raf);
+          raf = null;
+          decor.style.setProperty('--decor-shift-alt', '0px');
+        }
+      }
+
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseleave', onLeave);
+      window.addEventListener('resize', reevaluate);
+      window.matchMedia('(hover:hover) and (pointer:fine)').addEventListener?.('change', reevaluate);
+    })();
+
+    // Параллакс для картинки условий (как в преимуществах)
+    (function () {
+      const decor = document.querySelector('.faq-decor');
+      if (!decor) return;
+
+      const maxShift = 10; // ← 10px, как у benefits
+      let currentShift = 0;
+      let targetShift = 0;
+
+      const enable = () => window.matchMedia('(hover:hover) and (pointer:fine)').matches && window.innerWidth > 768;
+      let active = enable();
+      let raf = null;
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function onMove(e) {
+        if (!active) return;
+        const vw = window.innerWidth || document.documentElement.clientWidth;
+        const x = Math.min(Math.max(e.clientX, 0), vw) / vw;
+        // Обычный сдвиг: от -10 до +10
+        targetShift = -maxShift - (2 * maxShift) * x;
+        if (raf == null) tick();
+      }
+
+      function tick() {
+        raf = requestAnimationFrame(tick);
+        currentShift = lerp(currentShift, targetShift, 0.15);
+        decor.style.setProperty('--decor-shift-faq', `${currentShift.toFixed(2)}px`);
+      }
+
+      function onLeave() {
+        if (!active) return;
+        targetShift = 0;
+        if (raf == null) tick();
+      }
+
+      function reevaluate() {
+        const was = active;
+        active = enable();
+        if (!active && was) {
+          cancelAnimationFrame(raf);
+          raf = null;
+          decor.style.setProperty('--decor-shift-faq', '0px');
+        }
+      }
+
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseleave', onLeave);
+      window.addEventListener('resize', reevaluate);
+      window.matchMedia('(hover:hover) and (pointer:fine)').addEventListener?.('change', reevaluate);
+    })();
+
+  </script>
+
+</body>
+
+</html>

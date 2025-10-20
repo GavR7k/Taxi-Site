@@ -1,0 +1,1918 @@
+/* Переменные (desktop по умолчанию) */
+:root {
+  --logo-h: 200px; /* высота логотипа: desktop */
+  --logo-top: 30px; /* отступ сверху до верхнего края логотипа: desktop */
+  --bar-h: 66px; /* толщина полос: desktop */
+
+  --left-bar: #fac000;
+  --right-bar: #000000;
+
+  --bg: #ffffff;
+  --text: #111;
+  --maxw: 1600px;
+
+  --pad-x: 28px; /* внешний отступ у краёв полос */
+  --center-gap: 192px; /* отступ от центра для пунктов меню */
+  --link-fs: 16px;
+  --link-fw: 400; /* Полужирный шрифт для меню */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --content-w: 1200px; /* макс. ширина текста/меню на десктопе */
+  --hero-img-w-desktop: 380px;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+  :root {
+    --logo-h: 98px;
+    --logo-top: 65px;
+    --bar-h: 32px;
+    --pad-x: 18px;
+    /*--hero-h-mobile: 100px; /* ← высота шапки на мобиле */
+    --hero-overlay-mobile: rgba(255, 255, 255, .55); /* светлая вуаль */
+    --hero-img-w-mobile: 250px; /* статичный размер на мобиле */
+    --hero-img-mobile-shift: -110px; /* сдвиг влево, тоже можно менять */
+  }
+}
+
+/* База */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  /*height: 100%;*/
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+  font-weight: 400;
+}
+
+/* Шапка */
+.hero {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  /* логотип + отступ 80 + примерная высота инфо-блока */
+  /* min-height: calc(var(--logo-top) + var(--logo-h) + 80px + 260px); */
+  overflow: visible;
+}
+
+/* Фоновая картинка в шапке — за полосами */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* ниже полос (z-index:1) и лого (z-index:2) */
+  background-image: url("Images/herocar.jpg");
+  background-position: center 0; /* по центру, сверху */
+  background-repeat: no-repeat;
+  padding: 300px;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  /* Полупрозрачная вуаль на мобиле поверх фоновой картинки */
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0; /* ниже полос (1) и лого (2) */
+    background: var(--hero-overlay-mobile);
+    pointer-events: none;
+  }
+
+  /* фиксируем вертикальный размер шапки на мобиле */
+  /*.hero{
+    min-height: var(--hero-h-mobile);
+  }*/
+
+  /* мобильные настройки фона */
+  .hero::before {
+    /* та же картинка; можно заменить на мобильную версию, если появится */
+    background-image: url("Images/herocar.jpg");
+    background-position: center -20px; /* по центру, сверху */
+    /* background-size: cover;            /* на мобиле закрываем всю область */
+  }
+}
+
+/* Полосы под логотипом — во всю ширину окна */
+.hero__bars {
+  position: absolute;
+  top: calc(var(--logo-top) + var(--logo-h) / 2 - var(--bar-h) / 2);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw; /* фоллбек */
+  height: var(--bar-h);
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* левая / правая половины */
+  z-index: 3;
+  pointer-events: auto;
+}
+@supports (width: 100dvw) {
+  .hero__bars {
+    width: 100dvw;
+  } /* точнее, чем 100vw */
+}
+
+.hero__bar--left{  background: var(--left-bar); }
+.hero__bar--right{ background: var(--right-bar); }
+
+/* Меню внутри полос */
+.bar-menu {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+/* Левая половина: старт от max(левый край окна + 50px, центр - 600px) */
+.bar-menu--left {
+  justify-content: flex-start;
+  padding-left: max(25px, calc((100vw - var(--content-w)) / 2));
+  padding-right: 170px; /* не даём тексту подползать к лого */
+}
+/* Правая половина: конец на min(правый край окна - 50px, центр + 600px) */
+.bar-menu--right {
+  justify-content: flex-end;
+  padding-left: 170px; /* не даём тексту подползать к лого */
+  padding-right: max(25px, calc((100vw - var(--content-w)) / 2));
+}
+
+/* Ссылки-меню (тонкий вес из переменной) */
+.nav-link {
+  position: relative;
+  font-size: var(--link-fs);
+  font-weight: var(--link-fw);
+  text-decoration: none;
+  line-height: 1;
+  letter-spacing: 0.1px;
+  color: inherit;
+  transition: transform 0.25s var(--ease), letter-spacing 0.25s var(--ease),
+    text-shadow 0.25s var(--ease), background-size 0.35s var(--ease);
+  will-change: transform, letter-spacing, background-size;
+  isolation: isolate;
+
+  /* Подчёркивание через background — стабильнее, чем псевдоэлементы */
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  background-size: 0 2px; /* старт: нет подчёркивания */
+}
+
+/* Цвета по сторонам */
+.nav-link--left {
+  color: #000000;
+} /* на жёлтой полосе */
+.nav-link--right {
+  color: #fac000;
+} /* на чёрной полосе */
+
+/* Состояние наведения/фокуса — включаем классом из JS */
+.nav-link.is-hovered {
+  /*transform: translateY(-1px);*/
+  letter-spacing: 0.35px;
+  font-weight: 900;
+  /*font-size: 20px;*/
+  /*text-shadow:
+    0 0 12px white,
+    0 0 12px rgba(0,0,0,0);*/
+  background-size: 100% 2px; /* подчёркивание «выезжает» */
+}
+
+/* Клавиатурный фокус */
+.nav-link:focus-visible {
+  outline: none;
+  background-size: 100% 2px;
+}
+
+/* Логотип — над полосами */
+.hero__logo-wrap {
+  position: absolute;
+  top: var(--logo-top);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 4;
+  opacity: 0;
+  transform: translateY(-8px);
+  animation: fadeInUp 0.6s ease-out 0.05s forwards;
+  pointer-events: none; /* ← пропускаем события к меню ниже */
+}
+.hero__logo {
+  height: var(--logo-h);
+  width: auto;
+  display: block;
+  pointer-events: none; /* ← на всякий случай */
+}
+
+/* Мини-блоки: стартуют от границы центр + 150px */
+.hero-mini {
+  position: absolute;
+  top: 210px;
+  left: calc(50% + 180px); /* привязка к центру +150px */
+  right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2;
+}
+
+/* Элемент мини-блока */
+.mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  color: black; /* мягкий серый */
+  text-decoration: none; /* без подчёркивания */
+  line-height: 1;
+  padding: 4px 6px; /* кликабельная площадь побольше */
+  border-radius: 6px;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease),
+    transform 0.15s var(--ease);
+  backdrop-filter: none; /* на будущее, если решим добавить стекло */
+}
+
+.mini:hover {
+  color: #555; /* чуть темнее при наведении */
+  /*background: rgba(0,0,0,.03);*/
+  background: transparent;
+  transform: translateY(-1px);
+}
+
+.mini .icon {
+  height: 15px; /* Размер иконки */
+  width: auto;
+  display: block;
+  color: black;
+  pointer-events: none;
+}
+
+/* Эффект наведения для мини-ссылок (иконка + мелкий шрифт) */
+.mini {
+  position: relative;
+}
+
+/* работаем по тексту, чтобы не тянуть иконку */
+.mini span {
+  position: relative;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 2px; /* старт: без подчёркивания */
+  transition: letter-spacing 0.25s var(--ease),
+    background-size 0.35s var(--ease), text-shadow 0.25s var(--ease);
+}
+
+/* плавность для иконки отдельно */
+.mini .icon {
+  transition: transform 0.25s var(--ease), filter 0.25s var(--ease),
+    opacity 0.25s var(--ease);
+}
+
+/* hover/focus эффект — лёгкое свечение, подчёркивание, микро-кернинг */
+@media (hover: hover) and (pointer: fine) {
+  .mini:hover span {
+    background-size: 100% 2px; /* подчёркивание «выезжает» */
+    letter-spacing: 0.35px;
+    font-weight: 900;
+    /*text-shadow: 0 0 6px currentColor;*/
+  }
+  /*.mini:hover .icon{
+    /*transform: translateY(-1px);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.15));
+  }*/
+}
+
+/* клавиатурный фокус */
+.mini:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06), 0 0 0 6px rgba(250, 192, 0, 0.35); /* мягкое кольцо в стиле сайта */
+  border-radius: 8px;
+}
+.mini:focus-visible span {
+  background-size: 100% 2px;
+  letter-spacing: 0.35px;
+  font-weight: 900;
+}
+
+/* на тач-устройствах делаем эффект мягче, без свечения */
+@media (hover: none) {
+  .mini:active span {
+    background-size: 100% 2px;
+  }
+}
+
+/* На мобильном можно при желании скрыть/подвинуть (пока оставим видимыми) */
+@media (max-width: 768px) {
+  .hero-mini {
+    top: 10px; /* при желании подправь */
+    left: 16px; /* прилип к левой стороне */
+    right: auto; /* отключили правое позиционирование */
+    gap: 6px; /* строки ближе (было 10px) */
+  }
+
+  .mini {
+    line-height: 1.1; /* чуть плотнее текст в строке */
+    padding: 3px 4px; /* поменьше внешние отступы */
+  }
+
+  .mini .icon {
+    height: 14px; /* на 1px компактнее иконка */
+  }
+}
+
+/* Инфо-блок под логотипом */
+.hero-info {
+  /* position: absolute; ← УДАЛИТЬ */
+  /* top, left, transform — тоже УДАЛИТЬ */
+  width: min(100%, var(--content-w));
+  max-width: var(--content-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 24px;
+  z-index: 2;
+  position: relative; /* если нужно для z-index */
+  padding-top: calc(
+    var(--logo-top) + var(--logo-h) + 80px
+  ); /* компенсация отступа логотипа */
+}
+
+/* Картинка слева */
+.hero-info__media {
+  overflow: hidden; /* чтобы на мобиле сдвиг не создавал скролла */
+  border-radius: 8px; /* немного сгладим */
+}
+.hero-info__media img {
+  display: block;
+  height: auto;
+  width: 380px; /* фиксированный размер */
+  max-width: none; /* не сжимать при сужении окна */
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (max-width: 1200px) {
+  /* сужаем окно — картинка плавно уезжает влево,
+     на величину половины разницы между 1200 и текущей шириной окна */
+  .hero-info__media {
+    transform: translateX(calc(-1 * (1100px - 100vw) / 2));
+  }
+}
+
+@media (max-width: 1100px) {
+  /* сужаем окно — картинка плавно уезжает влево,
+     на величину половины разницы между 1200 и текущей шириной окна */
+  .hero-info__media {
+    transform: translateX(calc(-1 * (1000px - 100vw) / 2));
+  }
+}
+
+@media (max-width: 1000px) {
+  /* сужаем окно — картинка плавно уезжает влево,
+     на величину половины разницы между 1200 и текущей шириной окна */
+  .hero-info__media {
+    transform: translateX(calc(-1 * (900px - 100vw) / 2));
+  }
+}
+
+@media (max-width: 900px) {
+  /* сужаем окно — картинка плавно уезжает влево,
+     на величину половины разницы между 1200 и текущей шириной окна */
+  .hero-info__media {
+    transform: translateX(calc(-1 * (800px - 100vw) / 2));
+  }
+}
+
+/* Тексты справа */
+.hero-info__text {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column; /* вертикальная колонка */
+  /* align-items: flex-end;    /* всё содержимое к правому краю */
+}
+
+/* Кнопка в правый край текстовой колонки */
+.hero-info__text .cta {
+  margin-left: auto; /* прижимаем кнопку вправо */
+  margin-right: 35px;
+  /* margin-left: -15px; */
+  margin-top: 35px;
+}
+
+/*.hero-info__text .cta{ 
+  margin-top: 35px;
+  margin-left: -15px;
+}*/
+
+.hero-info__title {
+  margin: 0 0 10px 0;
+  font-size: 50px; /* 50 кегль */
+  font-weight: 900; /* 900 толщина */
+  line-height: 1.05;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+.hero-info__subtitle {
+  margin: 0;
+  padding-top: 20px;
+  font-size: 16px; /* 16 кегль */
+  font-weight: 400; /* 400 толщина */
+  line-height: 1.35;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+
+/* Декор-изображение за инфо-блоком — фиксированный размер */
+.hero-info-decor {
+  position: absolute;
+  top: calc(
+    var(--logo-top) + var(--logo-h) + 80px - 150px
+  ); /* на 87px выше инфоблока */
+  z-index: 1; /* под полосами (1) и контентом (2), выше ::before */
+  display: block;
+  width: auto; /* используем естественный размер файла */
+  height: auto;
+  pointer-events: none;
+}
+
+/* CTA кнопка со скошенными краями (Shear Angle 18°) */
+.cta {
+  display: inline-block;
+  background: #fac000;
+  color: #000;
+  text-decoration: none;
+  transform: skewX(-18deg); /* скошенный контейнер */
+  border: 0;
+  border-radius: 0; /* «квадратная» форма */
+  line-height: 1;
+  cursor: pointer;
+  position: relative;
+  will-change: transform, box-shadow, filter;
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease),
+    filter 0.18s var(--ease);
+  /* чтобы текст не уезжал при переносе */
+  white-space: nowrap;
+  /* лёгкая «бумажная» тень */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+.cta__inner {
+  display: block;
+  transform: skewX(18deg); /* контр-скос — текст без искажений */
+  padding: 25px 25px; /* 35px со всех сторон */
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+/* Ховеры/актив/фокус на десктопе */
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    transform: skewX(-18deg) translateY(-2px);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
+    filter: saturate(1.05);
+  }
+  .cta:active {
+    transform: skewX(-18deg) translateY(0);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+}
+.cta:focus-visible {
+  outline: none;
+  /* аккуратный фокус-ринговый эффект */
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12), 0 0 0 6px rgba(250, 192, 0, 0.55);
+}
+
+/* Небольшая адаптация на мобиле: можно упростить переносы */
+@media (max-width: 768px) {
+  .cta {
+    white-space: normal;
+  }
+  .cta__inner {
+    padding: 28px; /* чуть меньше, чтобы не «давила» */
+    font-size: 15px;
+    text-align: center;
+  }
+}
+
+/* ≥1200px: центр картинки привязан к (центр окна - 80px) */
+@media (min-width: 1200px) {
+  .hero-info-decor {
+    left: calc(50% - 180px);
+    /* БЫЛО: transform: translateX(-50%); */
+    transform: translateX(calc(-50% + var(--decor-shift, 0px)));
+  }
+}
+
+/* <1200px: позиционируем от рамки контента (центр - 600px) + 147px
+   — при сужении уходит левее, размер не меняем */
+@media (max-width: 1199.98px) {
+  .hero-info-decor {
+    left: calc(50% - 180px);
+    /* left: calc(50% - 600px + 147px);
+    /* БЫЛО: transform: none; */
+    /* transform: translateX(var(--decor-shift, 0px));*/
+    transform: translateX(calc(-50% + var(--decor-shift, 0px)));
+  }
+}
+
+/* Мобильная адаптация: обычно декор мешает — скрываем или уменьшаем */
+@media (max-width: 768px) {
+  .hero-info-decor {
+    /*display: none; /* если нужно видно — замени на transform/scale и сдвиг */
+    /* пример альтернативы: */
+    display: block;
+    top: calc(var(--logo-top) + var(--logo-h) - 35px);
+    /*width: auto;           /* используем естественный размер файла */
+    /*height: auto;*/
+    left: 200px;
+    max-width: 1100px;
+    /*opacity: .5;*/
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+  }
+
+  /* Две колонки: слева "окно" для картинки, справа текст */
+  .hero-info {
+    /*top: calc(var(--logo-top) + var(--logo-h) - 200px);
+    left: 0; right: 0;*/
+    transform: none;
+    width: 100%;
+    grid-template-columns: 100px 1fr; /* окно слева + текст справа */
+    padding-top: 200px;
+    /*align-items: up;*/
+    /*gap: 12px;
+    padding: 0 16px;*/
+  }
+
+  .hero-info__media {
+    position: relative;
+    width: 160px; /* ширина видимой «маски» (регулируй при желании) */
+    height: 380px; /* высота окна (регулируй) */
+    overflow: hidden; /* не даём появляться горизонтальному скроллу */
+    border-radius: 6px;
+    transform: none;
+  }
+
+  .hero-info__media img {
+    position: relative;
+    left: var(--hero-img-mobile-shift); /* статичный сдвиг влево */
+    width: var(--hero-img-w-mobile); /* статичный размер на мобиле */
+    height: auto;
+    /*top: 0;
+    transform: none;
+    max-width: none;*/
+  }
+
+  /* Поворот картинки по мыши (десктоп-подготовка) */
+  @media (hover: hover) and (pointer: fine) {
+    .hero-info__media img {
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+  }
+
+  /* Если у пользователя включено «уменьшение анимаций» — не крутим */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-info__media img {
+      transition: none !important;
+    }
+  }
+
+  .hero-info__title {
+    font-size: 24px;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .hero-info__subtitle {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  /* Кнопка в правый край текстовой колонки */
+  /*.hero-info__text .cta{
+   margin-left: auto;   /* уводим кнопку к правой границе блока */
+  /* margin-top: 35px;
+  }*/
+
+  /* (опционально) на мобиле центрировать */
+  /*@media (max-width: 768px){
+  .hero-info__text .cta{
+   margin-left: auto;
+   margin-right: 0;   /* можно поменять на auto для центрирования */
+  /*}
+}*/
+}
+
+/* Бургер (иконка burger.svg по центру, 133px сверху, сдвиг на 100px влево) */
+.burger {
+  position: absolute;
+  top: 143px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: -100px; /* сдвиг на 100px влево от центра */
+  display: none; /* показываем только < 1200px */
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  z-index: 3;
+  line-height: 0;
+}
+
+/* Размер иконки */
+.burger img {
+  height: 20px;
+  width: auto;
+  display: block;
+  pointer-events: none; /* клики идут по кнопке */
+  user-select: none;
+}
+
+/* Лёгкий ховер/тап-эффект на десктопе */
+@media (hover: hover) and (pointer: fine) {
+  .burger:hover img {
+    transform: scale(1.04);
+    transition: transform 0.15s var(--ease);
+  }
+  .burger:active img {
+    transform: scale(0.98);
+  }
+}
+
+/* Появляется при ширине < 1200px (меню в полосах скрываем как и раньше) 
+@media (max-width: 1200px){
+  .bar-menu{ display: none; }
+  .burger{ display: inline-block; }
+}*/
+
+/* Мобильное меню */
+/* Оверлей — белая вуаль 50% */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75); /* 50% белого */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease), visibility 0.25s;
+  z-index: 10; /* ниже меню, но выше всего контента */
+}
+
+.mobile-menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Мобильное меню — скошенный жёлтый попап по центру */
+.mobile-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) skewX(-18deg); /* центрирование + скос */
+  min-width: 260px;
+  padding: 20px;
+  background: #fac000; /* жёлтый фон всего меню */
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease);
+  z-index: 20; /* выше оверлея */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Пункт меню — скошенный прямоугольник */
+.mobile-link {
+  display: block;
+  color: #000; /* чёрный текст */
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  padding: 14px 20px;
+  background: transparent; /* фон управляется через hover/focus */
+  border: none;
+  border-radius: 0;
+  transform: skewX(18deg); /* контр-скос — текст прямой */
+  text-align: center;
+  line-height: 1.2;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  position: relative;
+}
+
+/* Состояние по умолчанию — прозрачный фон (жёлтый от родителя виден) */
+.mobile-link {
+  background: transparent;
+}
+
+/* При наведении / фокусе — чёрный фон + жёлтый текст */
+.mobile-link:hover,
+.mobile-link:focus {
+  color: #fac000;
+  background: #000;
+  transform: skewX(0deg);
+  outline: none;
+}
+
+/* Текст — контр-скос, чтобы оставаться прямым */
+.mobile-link span {
+  display: block;
+  transform: skewX(18deg); /* ← возвращает текст в прямое положение */
+}
+
+.mobile-link:focus-visible {
+  box-shadow: 0 0 0 2px #fac000;
+}
+
+.mobile-link:active {
+  color: #fac000;
+  background: #000;
+  transform: skewX(0deg);
+}
+
+/* Прячем меню в полосах и показываем бургер только в МОБИЛЬНОМ режиме */
+@media (max-width: 768px) {
+  .bar-menu {
+    display: none;
+  }
+  .burger {
+    display: inline-block;
+  }
+}
+
+/* Анимация появления логотипа */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Контент ниже */
+main {
+  max-width: var(--maxw);
+  margin: 24px auto 0px;
+  padding: 0 16px;
+  font-weight: 400;
+}
+
+.content-divider {
+  height: 1px;
+  background-color: white;
+  /* background-color: #7a7a7a; */
+  max-width: var(--maxw);
+  margin: 50px auto;
+}
+
+@media (max-width: 768px) {
+  .content-divider {
+    height: 1px;
+    background-color: white;
+    /* background-color: #7a7a7a; */
+    max-width: var(--maxw);
+    margin: 50px auto;
+  }
+}
+
+/* ———————————————— */
+/* Секция "Наши преимущества" */
+/* ———————————————— */
+
+.section-benefits {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0px auto 0;
+  padding: 0 16px;
+}
+
+/* Горизонтальная линия-разделитель */
+.section-divider {
+  height: 1px;
+  background-color: #7a7a7a;
+  margin-bottom: 60px;
+}
+
+/* Основной контейнер преимуществ */
+.benefits-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 24px;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Пустая колонка вместо картинки (сохраняем отступ) */
+.benefits-media-placeholder {
+  width: 380px; /* как у оригинальной картинки */
+  height: 1px; /* невидимая, но занимает место */
+}
+
+/* Текстовая колонка */
+.benefits-text {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.benefits-title {
+  margin: 0 0 16px 0;
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+
+.benefits-lead,
+.benefits-commission,
+.benefits-call {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+
+.benefits-lead {
+  margin-bottom: 12px;
+}
+
+.benefits-commission {
+  margin-bottom: 20px;
+}
+
+.benefits-call {
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+/* Список преимуществ */
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.benefit-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* Кнопка CTA — прижата вправо */
+.benefits-text .cta {
+  margin-left: auto; /* прижимаем кнопку вправо */
+  margin-right: 35px;
+  /* margin-left: -15px; */
+  margin-top: 35px;
+}
+
+/* Декоративная картинка с параллаксом */
+.benefits-decor {
+  position: absolute;
+  top: -10px; /* выше текста, как в первом блоке */
+  left: calc(50% - 180px);
+  z-index: 0;
+  pointer-events: none;
+  width: auto;
+  height: auto;
+  transform: translateX(calc(-50% + var(--decor-shift-benefits, 0px)));
+}
+
+/* Адаптация под десктоп ≥1200px */
+@media (min-width: 1200px) {
+  .benefits-decor {
+    left: calc(50% - 180px);
+  }
+}
+
+/* Адаптация под <1200px */
+@media (max-width: 1200px) {
+  .benefits-decor {
+    left: calc(50% - 130px);
+    /*transform: translateX(calc(-50% + var(--decor-shift-benefits, 0px)));*/
+  }
+}
+
+/* Адаптация под <1100px */
+@media (max-width: 1100px) {
+  .benefits-decor {
+    left: calc(50% - 80px);
+    /*transform: translateX(calc(-50% + var(--decor-shift-benefits, 0px)));*/
+  }
+}
+
+/* Адаптация под <1000px */
+@media (max-width: 1000px) {
+  .benefits-decor {
+    left: calc(50% - 30px);
+    /*transform: translateX(calc(-50% + var(--decor-shift-benefits, 0px)));*/
+  }
+}
+
+/* Адаптация под <900px */
+@media (max-width: 900px) {
+  .benefits-decor {
+    left: calc(50% + 20px);
+    /*transform: translateX(calc(-50% + var(--decor-shift-benefits, 0px)));*/
+  }
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .section-benefits {
+    /*min-height: 400px;*/
+    margin-top: 0px;
+    margin-bottom: 150px;
+  }
+
+  .section-divider {
+    margin-bottom: 20px;
+  }
+
+  .benefits-content {
+    grid-template-columns: 60px 1fr;
+    gap: 12px;
+    padding: 0 16px;
+  }
+
+  .benefits-media-placeholder {
+    width: 160px;
+    height: 380px; /* как у hero-info__media на мобиле */
+  }
+
+  .benefits-title {
+    font-size: 24px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  .benefits-lead,
+  .benefits-commission,
+  .benefits-call {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .benefits-commission {
+    margin-bottom: 14px;
+  }
+
+  .benefits-call {
+    margin-top: 12px;
+    margin-bottom: 18px;
+  }
+
+  .benefit-item {
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .benefit-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cta {
+   white-space: normal;
+   
+  }
+
+  .cta__inner {
+    padding: 28px;
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .benefits-decor {
+    display: block;
+    top: -35px;
+    left: 200px;
+    max-width: 1100px;
+  }
+}
+
+/* Заполнитель, чтобы хедер "толкал" следующий контент */
+/*.hero-spacer {
+  /* Начальная высота = высота hero-info + отступы */
+/*height: calc(var(--logo-top) + var(--logo-h) + 80px + 260px);
+}*/
+
+/*@media (max-width: 1100px) {
+  .hero-spacer {
+    height: 340px;
+  }
+}
+
+/* Адаптация под средние экраны (если нужно) */
+/*@media (max-width: 900px) {
+  .hero-spacer {
+    height: 380px;
+  }
+}*/
+
+/* На мобильных — больше */
+/*@media (max-width: 768px) {
+  .hero-spacer {
+    height: 320px; /* подобрано под ваш min-height: 360px + контент */
+/*  }
+}*/
+
+/* Sticky-меню при прокрутке */
+.sticky-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--bar-h);
+  background: rgba(250, 192, 0, 0.8); /* #fac000 с 20% прозрачности */
+  z-index: 9999;
+  display: none; /* по умолчанию скрыто */
+  align-items: center;
+  padding: 0 var(--pad-x);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Показываем, когда активно */
+.sticky-header.active {
+  display: flex;
+}
+
+/* Десктоп: навигация слева */
+.sticky-nav-desktop {
+  display: flex;
+  gap: 28px;
+  margin-right: auto; /* отталкивает кнопку "наверх" вправо */
+}
+
+.sticky-link {
+  color: #000;
+  text-decoration: none;
+  font-size: var(--link-fs);
+  font-weight: var(--link-fw); /* 400 по умолчанию */
+  background: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  transition: background-size 0.35s var(--ease),
+    letter-spacing 0.25s var(--ease), font-weight 0.25s var(--ease);
+  letter-spacing: 0.1px;
+}
+
+.sticky-link:hover,
+.sticky-link:focus {
+  font-weight: 900; /* ← ЖИРНЫЙ */
+  letter-spacing: 0.35px;
+  background-size: 100% 2px;
+  outline: none;
+}
+
+/* Кнопка "наверх" — треугольник */
+.sticky-top-btn {
+  background: none;
+  border: none;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 20px;
+}
+
+.sticky-top-btn:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+/* Мобильная версия sticky-меню */
+.sticky-mobile {
+  display: none;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.sticky-burger {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.sticky-burger img {
+  height: 14px;
+  width: auto;
+  display: block;
+  pointer-events: none;
+}
+
+.sticky-cta-mobile {
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* Адаптация под мобильные */
+@media (max-width: 768px) {
+  .sticky-header {
+    height: var(--bar-h); /* 32px */
+    padding: 0 var(--pad-x); /* 18px */
+  }
+
+  .sticky-nav-desktop,
+  .sticky-top-btn {
+    display: none;
+  }
+
+  .sticky-mobile {
+    display: flex;
+  }
+
+  .sticky-cta-mobile {
+    font-size: 13px;
+  }
+}
+
+/* Десктоп: показываем только десктопную часть */
+@media (min-width: 769px) {
+  .sticky-mobile {
+    display: none;
+  }
+}
+
+/* ———————————————— */
+/* Секция "Акции" */
+/* ———————————————— */
+
+.section-promos {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Серая полоса под фоновой картинкой — во всю ширину окна */
+.promos-bg-strip {
+  position: absolute;
+  top: -10px; /* как у картинки */
+  left: calc(50% - 50vw); /* ← левый край окна! */
+  width: 100vw; /* ← ширина окна */
+  height: 512px;
+  background: #ffffff;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Скрываем полосу на мобильных */
+@media (max-width: 768px) {
+  .promos-bg-strip {
+    display: none;
+  }
+}
+
+/* Контент акций — как у преимуществ */
+.promos-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 24px;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding-bottom: 60px; /* чтобы не перекрывалось полосой при скролле */
+}
+
+.promos-media-placeholder {
+  width: 380px;
+  height: 1px;
+}
+
+.promos-text {
+  padding-top: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+.promos-title {
+  margin: 0 0 16px 0;
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+
+.promos-subtitle {
+  margin: 0 0 24px 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+
+.promos-text .cta {
+  margin-left: auto;
+  margin-right: 35px;
+  margin-top: 35px;
+}
+
+/* Декоративная картинка с ОБРАТНЫМ параллаксом */
+.promos-decor {
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 180px);
+  z-index: 0; /* ← выше полосы (z-index: -1) */
+  pointer-events: none;
+  width: auto;
+  height: auto;
+  transform: translateX(calc(-50% + var(--decor-shift-promos, 0px)));
+}
+
+/* Адаптация позиции картинки под разные ширины */
+@media (min-width: 1200px) {
+  .promos-decor {
+    left: calc(50% - 180px);
+  }
+}
+@media (max-width: 1200px) {
+  .promos-decor {
+    left: calc(50% - 130px);
+  }
+}
+@media (max-width: 1100px) {
+  .promos-decor {
+    left: calc(50% - 80px);
+  }
+}
+@media (max-width: 1000px) {
+  .promos-decor {
+    left: calc(50% - 30px);
+  }
+}
+@media (max-width: 900px) {
+  .promos-decor {
+    left: calc(50% + 20px);
+  }
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .section-promos {
+    margin-top: 0;
+  }
+
+  .promos-content {
+    grid-template-columns: 60px 1fr;
+    gap: 12px;
+    padding: 0 16px;
+  }
+
+  .promos-media-placeholder {
+    width: 160px;
+    height: 380px;
+  }
+
+  .promos-title {
+    font-size: 24px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  .promos-subtitle {
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 18px;
+  }
+
+  .promos-text {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .promos-text .cta {
+    margin-left: auto;
+    margin-right: 0;
+    margin-top: 24px;
+  }
+
+  .cta {
+    white-space: normal;
+  }
+  .cta__inner {
+    padding: 28px;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .promos-decor {
+    display: block;
+    top: -35px;
+    left: 200px;
+    max-width: 1100px;
+  }
+}
+
+/* ——————————————————————————————— */
+/* Вторая секция акций (альтернативная) */
+/* ——————————————————————————————— */
+
+.section-promos-alt {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  margin-top: 200px;
+  padding: 0 16px;
+}
+
+/* Серая полоса — от края до края окна */
+.promos-alt-bg-strip {
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 50vw); /* ← ключ: от края окна, а не контейнера */
+  width: 100vw;
+  height: 512px;
+  background: #f0e4d1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .promos-alt-bg-strip {
+    display: none;
+  }
+}
+
+.promos-alt-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 24px;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding-bottom: 60px;
+}
+
+.promos-alt-media-placeholder {
+  width: 380px;
+  height: 1px;
+}
+
+.promos-alt-text {
+  padding-top: 150px;
+  display: flex;
+  flex-direction: column;
+}
+
+.promos-alt-title {
+  margin: 0 0 16px 0;
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+
+.promos-alt-subtitle {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+
+.promos-alt-text .cta {
+  margin-left: auto;
+  margin-right: 35px;
+  margin-top: 35px;
+}
+
+/* Декоративная картинка с ОБРАТНЫМ параллаксом */
+.promos-alt-decor {
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 180px);
+  z-index: 0;
+  pointer-events: none;
+  transform: translateX(calc(-50% + var(--decor-shift-alt, 0px)));
+}
+
+/* Адаптация позиции картинки */
+@media (min-width: 1200px) {
+  .promos-alt-decor {
+    left: calc(50% - 180px);
+  }
+  .promos-alt-text {
+    padding-top: 180px;
+  }
+}
+@media (max-width: 1200px) {
+  .promos-alt-decor {
+    left: calc(50% - 130px);
+  }
+  .promos-alt-text {
+    padding-top: 140px;
+  }
+}
+@media (max-width: 1100px) {
+  .promos-alt-decor {
+    left: calc(50% - 80px);
+  }
+  .promos-alt-text {
+    padding-top: 120px;
+  }
+}
+@media (max-width: 1000px) {
+  .promos-alt-decor {
+    left: calc(50% - 30px);
+  }
+  .promos-alt-text {
+    padding-top: 100px;
+  }
+}
+@media (max-width: 900px) {
+  .promos-alt-decor {
+    left: calc(50% + 20px);
+  }
+  .promos-alt-text {
+    padding-top: 100px;
+  }
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .section-promos-alt {
+    margin-top: -150px;
+  }
+
+  .promos-alt-content {
+    grid-template-columns: 60px 1fr;
+    gap: 12px;
+    padding: 0 16px;
+  }
+
+  .promos-alt-media-placeholder {
+    width: 160px;
+    height: 380px;
+  }
+
+  .promos-alt-title {
+    font-size: 24px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  .promos-alt-subtitle {
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+
+  .promos-alt-text {
+    padding-top: 0px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .promos-alt-text .cta {
+    margin-left: auto;
+    margin-right: 0;
+    margin-top: 24px;
+  }
+
+  .cta {
+    white-space: normal;
+  }
+  .cta__inner {
+    padding: 28px;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .promos-alt-decor {
+    display: block;
+    top: -35px;
+    left: 200px;
+    max-width: 1100px;
+  }
+}
+
+/* ——————————————————————————————— */
+/* Секция "Условия работы" (FAQ) */
+/* ——————————————————————————————— */
+
+.section-faq {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.faq-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 24px;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.faq-media-placeholder {
+  width: 380px;
+  height: 1px;
+}
+
+.faq-text {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-title {
+  margin: 0 0 16px 0;
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+
+/* Список условий */
+.faq-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.faq-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* Кнопка CTA */
+.faq-text .cta {
+  margin-left: auto;
+  margin-right: 35px;
+  margin-top: 35px;
+}
+
+/* Декоративная картинка — обычный параллакс (как в преимуществах) */
+.faq-decor {
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 180px);
+  z-index: 0;
+  pointer-events: none;
+  width: auto;
+  height: auto;
+  transform: translateX(calc(-50% + var(--decor-shift-faq, 0px)));
+}
+
+/* Адаптация позиции картинки */
+@media (min-width: 1200px) {
+  .faq-decor {
+    left: calc(50% - 180px);
+  }
+}
+@media (max-width: 1200px) {
+  .faq-decor {
+    left: calc(50% - 130px);
+  }
+}
+@media (max-width: 1100px) {
+  .faq-decor {
+    left: calc(50% - 80px);
+  }
+}
+@media (max-width: 1000px) {
+  .faq-decor {
+    left: calc(50% - 30px);
+  }
+}
+@media (max-width: 900px) {
+  .faq-decor {
+    left: calc(50% + 20px);
+  }
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .section-faq {
+    margin-top: -150px;
+  }
+
+  .faq-content {
+    grid-template-columns: 60px 1fr;
+    gap: 12px;
+    padding: 0 16px;
+  }
+
+  .faq-media-placeholder {
+    width: 160px;
+    height: 380px;
+  }
+
+  .faq-title {
+    font-size: 24px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  .faq-item {
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .faq-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .faq-text .cta {
+    margin-left: auto;
+    margin-right: 0;
+    margin-top: 24px;
+  }
+
+  .cta {
+    white-space: normal;
+  }
+  .cta__inner {
+    padding: 28px;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .faq-decor {
+    display: block;
+    top: -35px;
+    left: 200px;
+    max-width: 1100px;
+  }
+}
+
+/* ——————————————————————————————— */
+/* Секция "Контакты" — фон от края до края (как в hero) */
+/* ——————————————————————————————— */
+
+.section-contacts {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 150px auto 0;
+  padding: 60px 0;
+  color: #fff;
+}
+
+/* полный фон — вынесен как отдельный элемент */
+.contacts-full-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100%;
+  background: #000;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Псевдо-фон на всю ширину окна */
+.section-contacts::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  /* заменяем height:100% на эту связку */
+  bottom: 0;
+  height: auto;
+  background: #000;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Контент поверх фона — теперь это центрирующий wrapper с max-width */
+.contacts-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+
+  /* ограничиваем ширину и центрируем именно контент */
+  max-width: var(--maxw); /* <-- ваш привычный центрирующий размер */
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.contacts-title {
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #fff;
+  margin: 0 0 40px 0;
+  letter-spacing: 0.2px;
+}
+
+/* Телефоны */
+.contacts-phones,
+.contacts-address {
+  margin-bottom: 30px;
+}
+
+.contacts-label {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 12px 0;
+  color: #fff;
+}
+
+.contact-phone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  transition: opacity 0.2s var(--ease);
+}
+.contact-phone:hover {
+  opacity: 0.8;
+}
+
+.contact-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+}
+
+/* Соцсети */
+.contacts-socials {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  display: block;
+  filter: brightness(0) invert(1);
+  transition: transform 0.2s var(--ease);
+}
+.social-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Адрес */
+.contact-text {
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 4px 0 0 0;
+  color: #fff;
+}
+
+/* Карта */
+.contacts-map {
+  height: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .section-contacts {
+    padding: 40px 0;
+    margin-top: -80px;
+  }
+
+  .contacts-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 0 16px;
+  }
+
+  .contacts-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+
+  .contacts-map {
+    height: 400px;
+  }
+
+  .contact-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .social-icon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* full-width фон футера */
+.site-footer {
+  position: relative; /* чтобы z-index работал корректно */
+  left: 50%; /* позиционируем от центра */
+  transform: translateX(-50%); /* сдвигаем влево на половину ширины */
+  width: 100vw; /* именно ширина окна — фон от края до края */
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+/* Контент остаётся центрированным по макету */
+.site-footer__inner {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
