@@ -28,7 +28,7 @@
     --bar-h: 32px;
     --pad-x: 18px;
     /*--hero-h-mobile: 100px; /* ← высота шапки на мобиле */
-    --hero-overlay-mobile: rgba(255, 255, 255, .55); /* светлая вуаль */
+    --hero-overlay-mobile: rgba(255, 255, 255, 0.55); /* светлая вуаль */
     --hero-img-w-mobile: 250px; /* статичный размер на мобиле */
     --hero-img-mobile-shift: -110px; /* сдвиг влево, тоже можно менять */
   }
@@ -122,8 +122,12 @@ body {
   } /* точнее, чем 100vw */
 }
 
-.hero__bar--left{  background: var(--left-bar); }
-.hero__bar--right{ background: var(--right-bar); }
+.hero__bar--left {
+  background: var(--left-bar);
+}
+.hero__bar--right {
+  background: var(--right-bar);
+}
 
 /* Меню внутри полос */
 .bar-menu {
@@ -906,7 +910,7 @@ main {
 .benefits-text .cta {
   margin-left: auto; /* прижимаем кнопку вправо */
   margin-right: 35px;
-  /* margin-left: -15px; */
+  /* margin-left: -15px;  */
   margin-top: 35px;
 }
 
@@ -969,6 +973,13 @@ main {
     margin-bottom: 150px;
   }
 
+  .benefits-text .cta {
+    margin-left: auto;
+    margin-right: 35px;
+    /* margin-left: -15px; */
+    margin-top: 35px;
+  }
+
   .section-divider {
     margin-bottom: 20px;
   }
@@ -1017,8 +1028,8 @@ main {
   }
 
   .cta {
-   white-space: normal;
-   
+    white-space: normal;
+    margin-left: -150px;
   }
 
   .cta__inner {
@@ -1341,12 +1352,12 @@ main {
     display: flex;
     flex-direction: column;
   }
-
+  /* 
   .promos-text .cta {
     margin-left: auto;
-    margin-right: 0;
-    margin-top: 24px;
-  }
+    margin-right: 35px;
+    margin-top: 20px;
+  } */
 
   .cta {
     white-space: normal;
@@ -1409,7 +1420,7 @@ main {
 }
 
 .promos-alt-media-placeholder {
-  width: 380px;
+  width:380px;
   height: 1px;
 }
 
@@ -1498,7 +1509,7 @@ main {
 /* Мобильная версия */
 @media (max-width: 768px) {
   .section-promos-alt {
-    margin-top: -150px;
+    margin-top: 30px;
   }
 
   .promos-alt-content {
@@ -1532,8 +1543,9 @@ main {
 
   .promos-alt-text .cta {
     margin-left: auto;
-    margin-right: 0;
-    margin-top: 24px;
+    margin-right: 35px;
+    margin-top: 30px;
+
   }
 
   .cta {
@@ -1678,6 +1690,11 @@ main {
     gap: 12px;
     padding: 0 16px;
   }
+  .faq-text .cta {
+    margin-left: auto;
+    margin-right: 35px;
+    margin-top: 15px;
+  }
 
   .faq-media-placeholder {
     width: 160px;
@@ -1700,11 +1717,11 @@ main {
     height: 16px;
   }
 
-  .faq-text .cta {
+  /* .faq-text .cta {
     margin-left: auto;
     margin-right: 0;
     margin-top: 24px;
-  }
+  } */
 
   .cta {
     white-space: normal;
@@ -1724,6 +1741,281 @@ main {
 }
 
 /* ——————————————————————————————— */
+/* Секция "Наша команда" — фон от края до края (как в hero)*/
+/* ——————————————————————————————— */
+
+.section-team {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0px auto;
+  margin-top: 50px;
+  padding: 0 16px;
+}
+
+.team-content {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.team-title {
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1.05;
+  text-align: center;
+  color: #000;
+  margin: 0;
+}
+
+.team-carousel {
+  position: relative;
+  overflow: hidden;
+
+  /* 1 изменение */
+  /* position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 100%;
+  overflow: hidden; */
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+
+  /* 1 изменение */
+
+  /* display: flex;
+  gap: 36px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 16px;
+  -webkit-overflow-scrolling: touch; */
+  /* 
+2 изменение */
+
+  /* display: flex;
+  transition: transform 0.4s ease;
+  will-change: transform;
+  gap: 36px; */
+}
+
+.team-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  /* 1 изменение */
+  /* 
+  flex: 0 0 280px; 
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; */
+
+  /* 2 изменение */
+  /* flex: 0 0 280px;
+  scroll-snap-align: start;
+  text-align: center;
+  align-items: center;
+  flex-direction: column; */
+}
+/* .carousel-window {
+  overflow: hidden;
+  width: 100%;
+} */
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #000;
+  color: #fff;
+  border: none;
+  font-size: 32px;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0.8;
+}
+
+.carousel-btn.left {
+  left: 0;
+}
+
+.carousel-btn.right {
+  right: 0;
+}
+
+.team-photo {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 7%;
+  margin-bottom: 16px;
+}
+
+.team-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.team-role {
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  margin: 4px 0;
+}
+
+.team-desc {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* CTA */
+.team-content .cta {
+  align-self: flex-end;
+  margin-left: auto;
+  margin-top: 20px;
+  margin-right: 35px;
+  margin-bottom: 15px;
+}
+
+/* Декор */
+.team-decor {
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 180px);
+  z-index: 0;
+  pointer-events: none;
+  width: auto;
+  height: auto;
+}
+
+/* мобильная версия для секции */
+
+@media (max-width: 768px) {
+  .team-title {
+    font-size: 28px;
+    margin-top: -80px;
+  }
+
+  .team-photo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .team-name {
+    font-size: 18px;
+  }
+
+  .team-role {
+    font-size: 14px;
+  }
+
+  .team-desc {
+    font-size: 13px;
+  }
+}
+
+/* __________________________ */
+/* Секция с отзывами */
+/* __________________________ */
+.section-reviews {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 50px auto 0;
+  padding: 0 16px;
+}
+
+.reviews-content {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.reviews-title {
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1.05;
+  text-align: center;
+  color: #000;
+  margin: 0;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.review-card {
+  background: #f6f5f5;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.review-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.review-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.review-text {
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: start;
+  color: #333;
+}
+.reviews-content .cta {
+  margin-left: auto;
+  margin-right: 35px;
+  margin-bottom: 100px;
+}
+
+/* Адаптация на мобильных */
+@media (max-width: 768px) {
+  .reviews-title {
+    font-size: 28px;
+    margin-top: -40px;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ——————————————————————————————— */
 /* Секция "Контакты" — фон от края до края (как в hero) */
 /* ——————————————————————————————— */
 
@@ -1731,7 +2023,7 @@ main {
   position: relative;
   width: 100%;
   max-width: var(--maxw);
-  margin: 150px auto 0;
+  margin: 0px auto 0;
   padding: 60px 0;
   color: #fff;
 }
